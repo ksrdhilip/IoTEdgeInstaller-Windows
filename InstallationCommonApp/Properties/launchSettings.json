@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "InstallationCommonApp": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Personal\\Workspace\\IoTInstaller\\InstallationCommonApp\\params.txt"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>dotnet-PostRebootInstallerService-d48cacab-4ed5-4064-93ba-7a03be9f16d1</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="installation.log" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="installation.log">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="9.0.1" />
+		<PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.1" />
+		<PackageReference Include="System.Diagnostics.EventLog" Version="9.0.1" />
+		<PackageReference Include="TaskScheduler" Version="2.11.0" />
+
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CommonUtilities\CommonUtilities.csproj" />
+	</ItemGroup>
+	<Target Name="PostPublish" AfterTargets="Publish">
+		<Exec Command="robocopy &quot;$(SolutionDir)PostRebootInstallerService\bin\$(Configuration)\net8.0\publish&quot; &quot;$(SolutionDir)IoTEdgeInstaller\PostRebootInstallerService&quot; /E" IgnoreExitCode="true">
+			<Output TaskParameter="ExitCode" PropertyName="RobocopyExitCode" />
+		</Exec>
+		<!--<Error Condition="'$(RobocopyExitCode)' == '1'" Text="Robocopy operation completed with errors." />-->
+		<Error Condition="'$(RobocopyExitCode)' &gt; '8'" Text="Robocopy operation failed with exit code $(RobocopyExitCode)." />
+	</Target>
+</Project>

@@ -1,0 +1,51 @@
+# .NET Build Outputs
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+
+# Logs
+*.log
+installation.log
+
+# Visual Studio Files
+.vs/
+*.user
+*.suo
+*.sln.docstates
+*.vcxproj.user
+
+# NuGet Packages
+packages/
+*.nupkg
+
+# Temporary Files
+*.tmp
+*.bak
+*.cache
+~$*
+
+# Sensitive Configuration Files
+appsettings.json
+appsettings.*.json
+!appsettings.example.json
+*.secrets.json
+
+# Published Outputs
+publish/
+IoTEdgeInstaller/InstallationCommonApp/
+IoTEdgeInstaller/PostRebootInstallerService/
+
+# Dependency Downloads
+Prerequisites/dotnet-runtime-*.exe
+AzureIoTEdge.msi
+
+# OS Generated Files
+Thumbs.db
+.DS_Store
+
+# User Input Files
+params.txt

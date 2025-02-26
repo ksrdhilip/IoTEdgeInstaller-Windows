@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="AddVMSwitch.ps1" />
+	  <None Remove="appsettings.json" />
+	  <None Remove="installation.log" />
+	  <None Remove="params.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="AddVMSwitch.ps1">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="installation.log">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="params.txt">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.16.6" />
+		<PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.15.4" />
+		<PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.17.5" />
+		<PackageReference Include="Microsoft.Azure.Devices.Shared" Version="1.30.4" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+		<PackageReference Include="System.Diagnostics.EventLog" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
+		<PackageReference Include="System.Management" Version="9.0.1" />
+
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CommonUtilities\CommonUtilities.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+	<Target Name="PostPublish" AfterTargets="Publish">
+		<Exec Command="robocopy &quot;$(SolutionDir)InstallationCommonApp\bin\$(Configuration)\net8.0\publish&quot; &quot;$(SolutionDir)IoTEdgeInstaller\InstallationCommonApp&quot; /E" IgnoreExitCode="true">
+			<Output TaskParameter="ExitCode" PropertyName="RobocopyExitCode" />
+		</Exec>
+		<!--<Error Condition="'$(RobocopyExitCode)' == '1'" Text="Robocopy operation completed with errors." />-->
+		<Error Condition="'$(RobocopyExitCode)' &gt; '8'" Text="Robocopy operation failed with exit code $(RobocopyExitCode)." />
+	</Target>
+
+</Project>
