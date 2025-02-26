@@ -9,14 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		appsettings.example.json = appsettings.example.json
-		DPSConfigInCode.gif = DPSConfigInCode.gif
-		DPSCreation.gif = DPSCreation.gif
-		DPSEnrollmentGroupCreation.gif = DPSEnrollmentGroupCreation.gif
-		PrimaryKeyCopy.gif = PrimaryKeyCopy.gif
 		README.md = README.md
-		ScopeIdCopy.gif = ScopeIdCopy.gif
-		SecondaryKeyCopy.gif = SecondaryKeyCopy.gif
-		VerifyEdgeRuntime.gif = VerifyEdgeRuntime.gif
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtilities", "CommonUtilities\CommonUtilities.csproj", "{E5AAA14A-6582-49A7-B6E3-AFED0A13A4A3}"
